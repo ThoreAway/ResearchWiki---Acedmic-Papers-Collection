@@ -1,0 +1,72 @@
+SELECT paper.paper_id, paper.title, abstract, author.first_name, author.middle_name, author.last_name 
+FROM paper
+LEFT JOIN paper_author on (paper.paper_id = paper_author.paper_id)
+LEFT JOIN author on (paper_author.paper_id = author.author_id);
+
+
+
+JOIN award on award.paper_id = paper.paper_id
+JOIN award_type on award_type.award_type_id = award.award_type_id;
+
+
+select paper.paper_id, title, abstract
+from paper
+                LEFT join award on (paper.paper_id = award.paper_id)
+                LEFT join award_type on (award.award_type_id = award_type.award_type_id)
+		LEFT JOIN paper_author on (paper.paper_id =  paper_author.paper_id)
+                LEFT JOIN author on (paper_author.author_id = author.author_id)
+WHERE author.author_id = 60074;
+GROUP BY author.author_id;
+
+SELECT paper.paper_id as PaperId, title, abstract, 
+                    group_concat (award_type.name , ', ') as award 
+                    FROM paper
+                    LEFT JOIN award on (paper.paper_id = award.paper_id)
+                    LEFT JOIN award_type on (award.award_type_id = award_type.award_type_id)
+                    GROUP BY paper.paper_id, paper.title
+		    ORDER BY REPLACE(title, '"','') ASC;
+
+
+SELECT paper.paper_id as PaperId, title, abstract, award_type.name as award FROM paper
+                    LEFT JOIN award on (paper.paper_id = award.paper_id)
+                    LEFT JOIN award_type on (award.award_type_id = award_type.award_type_id)
+		    LEFT JOIN paper_author on (paper.paper_id = paper_author.paper_id)
+                    LEFT JOIN author on (paper_author.author_id = author.author_id)
+  WHERE paper.paper_id = 60071
+   OR paper.paper_id  = 60072
+   OR paper.paper_id = 60085
+   OR paper.paper_id = 60084;
+
+
+SELECT paper.paper_id as PaperId, title, abstract, 
+                    group_concat (award_type.name , ', ') as award 
+                    FROM paper
+                    LEFT JOIN award on (paper.paper_id = award.paper_id)
+                    LEFT JOIN award_type on (award.award_type_id = award_type.award_type_id)
+WHERE paper.paper_id in (60071,60072,60085,60084)
+GROUP BY paper.paper_id, paper.title;
+
+
+select paper.paper_id, title, abstract, award_type.name as 'awards', 
+author.first_name as authorfname, author.middle_name as authormname, author.last_name as authorlname
+from paper
+                LEFT join award on (paper.paper_id = award.paper_id)
+                LEFT join award_type on (award.award_type_id = award_type.award_type_id)
+                LEFT join paper_author on (paper.paper_id = paper_author.paper_id)
+                LEFT JOIN author on (paper_author.author_id = author.author_id)
+group by paper.paper_id, paper.title;
+
+create table readinglist (
+user_id INTEGER NOT NULL,
+paper_id INTEGER NOT NULL
+);
+
+
+SELECT paper.paper_id as PaperId, title, abstract,
+                      group_concat (award_type.name , ', ') as award
+                       FROM paper
+                     LEFT JOIN award on (paper.paper_id = award.paper_id)
+                   LEFT JOIN award_type on (award.award_type_id = award_type.award_type_id)
+   WHERE paper.paper_id = 60085, 60084);
+
+insert into readinglist values ('1', '60071'), ('1', '60072'), ('1', '60085'), ('1', '60087');

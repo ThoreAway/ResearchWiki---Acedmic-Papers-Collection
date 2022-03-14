@@ -1,0 +1,39 @@
+CREATE TABLE IF NOT EXISTS "award_type" (
+        "award_type_id" INTEGER NOT NULL,
+        "name"  TEXT NOT NULL,
+        PRIMARY KEY("award_type_id")
+);
+CREATE TABLE IF NOT EXISTS "paper_author" (
+        "paper_id"      INTEGER,
+        "author_id"     INTEGER
+);
+CREATE TABLE IF NOT EXISTS "paper" (
+        "paper_id"      INTEGER NOT NULL,
+        "title" TEXT NOT NULL,
+        "abstract"      TEXT,
+        "doi"   TEXT,
+        "video" TEXT,
+        "preview"       TEXT,
+        PRIMARY KEY("paper_id")
+);
+CREATE TABLE IF NOT EXISTS "award" (
+        "paper_id"      INTEGER NOT NULL,
+        "award_type_id" INTEGER
+);
+CREATE TABLE IF NOT EXISTS "author" (
+        "author_id"     INTEGER NOT NULL UNIQUE,
+        "first_name"    TEXT,
+        "middle_name"   TEXT,
+        "last_name"     TEXT,
+        PRIMARY KEY("author_id" AUTOINCREMENT)
+);
+
+CREATE TABLE IF NOT EXISTS "affiliation" (
+        "paper_id"      INTEGER NOT NULL,
+        "author_id"     INTEGER NOT NULL,
+        "country"       TEXT,
+        "state" TEXT,
+        "city"  TEXT,
+        "institution"   TEXT,
+        "department"    TEXT
+);
